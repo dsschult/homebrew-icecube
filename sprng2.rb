@@ -16,7 +16,10 @@ class Sprng2 < Formula
   def install
     ENV.deparallelize
     system "rm", "SRC/pmlcg/gmp.h"
-    system "make", "src", "tests"
+    system "make", "src",
+           "CFLAGS=#{ENV.cflags} -I#{Formula.factory('gmp').include}"
+#           "LDFLAGS=#{ENV.ldflags}"
+    system "make", "tests"
 
     # fix permissions
     chmod 0644, Dir["include/*.h"]
